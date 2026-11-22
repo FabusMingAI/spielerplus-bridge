@@ -6,10 +6,10 @@ from spielerplus_mcp.feeds import validate_url, parse_events
 
 
 @pytest.mark.parametrize("value", [
-    "http://www.spielerplus.de/events/ics?t=ABC&u=XYZ",
-    "https://evil.example/events/ics?t=ABC&u=XYZ",
-    "https://www.spielerplus.de.evil.example/events/ics?t=ABC&u=XYZ",
-    "https://www.spielerplus.de/other/path?t=ABC&u=XYZ",
+    "http://www.spielerplus.de/events/ics?t=EXAMPLE&u=EXAMPLE",
+    "https://evil.example/events/ics?t=EXAMPLE&u=EXAMPLE",
+    "https://www.spielerplus.de.evil.example/events/ics?t=EXAMPLE&u=EXAMPLE",
+    "https://www.spielerplus.de/other/path?t=EXAMPLE&u=EXAMPLE",
     "file:///etc/passwd",
 ])
 def test_reject_untrusted_urls(value):
