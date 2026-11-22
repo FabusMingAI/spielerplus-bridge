@@ -17,3 +17,9 @@ class SpielerPlusEntity(CoordinatorEntity):
             model="ICS calendar",
             sw_version="0.3.0",
         )
+
+    @property
+    def available(self):
+        return super().available and not getattr(
+            self.coordinator, "calendar_notice", None
+        )

@@ -10,7 +10,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from homeassistant.util import dt as dt_util
 
 from .const import CONF_URL, DOMAIN
-from .events import MAX_ICS_BYTES, detect_changes, parse_calendar
+from .events import MAX_ICS_BYTES, calendar_notice, detect_changes, parse_calendar
 from .attendance import AccountError
 from .account import SpielerPlusAccount
 
@@ -32,6 +32,7 @@ class SpielerPlusCoordinator(DataUpdateCoordinator):
         self.changes = []
         self.last_error = None
         self.window_end = None
+        self.calendar_notice = None
         self.account_client = None
         self.participation = {}
         self.account_error = None
@@ -74,6 +75,9 @@ class SpielerPlusCoordinator(DataUpdateCoordinator):
         except (aiohttp.ClientError, TimeoutError, ValueError) as exc:
             self.last_error = type(exc).__name__
             raise UpdateFailed(f"Calendar refresh failed ({self.last_error})") from None
+        self.calendar_notice = calendar_notice(events)
+        if self.calendar_notice:
+            events = []
         # Optional account failures must not invalidate a successful ICS fetch.
         if self.account_client is not None:
             try:

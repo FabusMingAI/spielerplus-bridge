@@ -2,18 +2,49 @@
   "config": {
     "step": {
       "user": {
-        "title": "SpielerPlus Calendar",
+        "title": "SpielerPlus",
+        "menu_options": {
+          "calendar": "Set up calendar",
+          "family": "Add child using existing account"
+        }
+      },
+      "calendar": {
+        "title": "Set up child / calendar",
         "data": {
           "name": "Calendar name",
           "url": "Private ICS subscription URL"
+        },
+        "description": "Choose a display name for this child. A detected subscription needs no URL field; otherwise enter this membership’s private subscription URL here."
+      },
+      "family": {
+        "title": "Reuse existing sign-in",
+        "description": "Reuse the stored sign-in for a separate child/calendar entry.",
+        "data": {
+          "source": "Existing entry"
+        }
+      },
+      "family_team": {
+        "title": "Choose child / membership",
+        "data": {
+          "membership_id": "Child / team membership"
         }
       }
     },
     "error": {
-      "invalid_url": "Enter a valid SpielerPlus ICS URL"
+      "invalid_url": "Enter a valid SpielerPlus ICS URL",
+      "invalid_auth": "Sign-in failed. Check your credentials.",
+      "unsupported_login": "This sign-in needs an unsupported additional step. Use the website; do not disable account protections.",
+      "access_denied": "SpielerPlus denied access. No attendance responses were changed.",
+      "no_memberships": "No matching team membership was found.",
+      "cannot_connect": "SpielerPlus is currently unreachable.",
+      "response_too_large": "The response exceeds the size limit.",
+      "unexpected_response": "The response was not recognized. The website may have changed.",
+      "invalid_name": "Enter a display name."
     },
     "abort": {
-      "already_configured": "This calendar is already configured."
+      "already_configured": "This calendar is already configured.",
+      "no_account": "Configure account sign-in on an existing calendar first.",
+      "no_memberships": "No matching team membership was found."
     }
   },
   "entity": {
@@ -80,7 +111,8 @@
         "title": "Attendance (optional)",
         "menu_options": {
           "account": "Connect SpielerPlus account",
-          "disable": "Remove account sign-in"
+          "disable": "Remove account sign-in",
+          "reuse": "Reuse stored sign-in"
         }
       },
       "account": {
@@ -101,6 +133,12 @@
       "disable": {
         "title": "Remove account sign-in",
         "description": "Remove the optional sign-in from active configuration. The ICS calendar stays configured."
+      },
+      "reuse": {
+        "title": "Reuse stored sign-in",
+        "data": {
+          "source": "Existing entry"
+        }
       }
     },
     "error": {
@@ -113,7 +151,14 @@
       "unexpected_response": "The response was not recognized. The website may have changed."
     },
     "abort": {
-      "no_memberships": "No matching team membership was found."
+      "no_memberships": "No matching team membership was found.",
+      "no_account": "Configure account sign-in on an existing calendar first."
+    }
+  },
+  "services": {
+    "rebuild_dashboard": {
+      "name": "Rebuild family dashboard",
+      "description": "Rebuild the managed family overview and one tab per child. Other dashboards are preserved."
     }
   }
 }

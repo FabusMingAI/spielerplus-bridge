@@ -193,6 +193,25 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(diagnostic.available)
         self.assertIsNotNone(diagnostic.native_value)
 
+    async def test_premium_placeholder_has_no_events_and_explicit_diagnostic(self):
+        self.coordinator.data = await self.fetch(
+            self.raw.replace(b"SUMMARY:Training", b"SUMMARY:Premium-Feature")
+        )
+        self.assertEqual(self.coordinator.data, [])
+        self.assertEqual(self.coordinator.calendar_notice, "calendar_premium_required")
+        self.coordinator.last_update_success = True
+        calendar = SpielerPlusCalendar(self.coordinator, self.entry)
+        self.assertFalse(calendar.available)
+        connection = SpielerPlusConnection(self.coordinator, self.entry)
+        self.assertFalse(connection.is_on)
+        self.assertEqual(
+            connection.extra_state_attributes["last_error"], "calendar_premium_required"
+        )
+        self.assertTrue(SpielerPlusRefresh(self.coordinator, self.entry).available)
+        self.coordinator.data = await self.fetch(self.raw)
+        self.assertIsNone(self.coordinator.calendar_notice)
+        self.assertTrue(calendar.available)
+
     async def test_refresh_button_requests_coordinator(self):
         self.coordinator.async_request_refresh = AsyncMock()
         await SpielerPlusRefresh(self.coordinator, self.entry).async_press()

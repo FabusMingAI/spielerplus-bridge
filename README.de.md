@@ -32,6 +32,14 @@ Nächstes Training, nächstes Spiel und die Sportwoche in Home Assistant. **Spie
 
 Training und Spiel werden anhand eindeutiger Wörter im Titel erkannt, etwa `Training`, `Spiel`, `Match` und `Turnier`. Nicht erkannte Titel bleiben als sonstige Termine im Kalender und in der Wochenliste. Die Einordnung ist kein offizieller SpielerPlus-Termintyp.
 
+## Zwei Kinder, ein Konto
+
+Für jedes Kind wird ein eigener Integrationseintrag mit der passenden Mitgliedschaft und dem zugehörigen Kalender angelegt. Unter **Dienst hinzufügen → Weiteres Kind mit vorhandenem Konto** lässt sich eine bereits lokal gespeicherte Anmeldung übernehmen. Ein erkennbarer Kalenderlink wird automatisch verwendet; andernfalls den privaten Link des ausgewählten Kindes direkt in Home Assistant eintragen.
+
+Die [Familienansicht](docs/FAMILY.md) zeigt beide Kinder nebeneinander, eine gemeinsame chronologische Sportwoche und eigene Tabs je Kind. Die Aktion `spielerplus.rebuild_dashboard` erstellt die Datei `spielerplus-family.yaml` anhand der registrierten Entitäten. Das Dashboard einmal in Home Assistant registrieren; eigene Dateien werden nicht überschrieben. Die generierte Datei enthält Anzeigenamen und Entitäts-IDs, keine Zugangsdaten.
+
+<p><img src="docs/images/dashboard-family.jpg" width="900" alt="Familienübersicht mit den erfundenen Kindern Lea und Ben"></p>
+
 ## Dashboard
 
 Die [Dashboard-Vorlage](dashboard/spielerplus.yaml) enthält **Überblick**, **Änderungen & Status** und **Teilnahme**. Dashboard-Texte sind deutsch; Einrichtung und Entitätsnamen sind deutsch und englisch übersetzt.

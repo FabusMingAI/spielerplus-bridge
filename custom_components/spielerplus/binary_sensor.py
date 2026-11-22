@@ -32,11 +32,16 @@ class SpielerPlusConnection(SpielerPlusEntity, BinarySensorEntity):
 
     @property
     def is_on(self):
-        return self.coordinator.last_update_success
+        return self.coordinator.last_update_success and not getattr(
+            self.coordinator, "calendar_notice", None
+        )
 
     @property
     def extra_state_attributes(self):
-        return {"last_error": self.coordinator.last_error}
+        return {
+            "last_error": getattr(self.coordinator, "calendar_notice", None)
+            or self.coordinator.last_error
+        }
 
 
 class SpielerPlusAccountConnection(SpielerPlusConnection):

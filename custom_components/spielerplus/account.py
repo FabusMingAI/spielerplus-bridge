@@ -17,6 +17,8 @@ from .attendance import (
     participation_counts,
 )
 
+from .config_helpers import calendar_subscription
+
 GET_PATHS = {
     "/site/login",
     "/site/select-team",
@@ -25,6 +27,7 @@ GET_PATHS = {
     "/dashboard/index",
     "/events",
     "/events/index",
+    "/events/calendar",
 }
 POST_PATHS = {"/site/login", "/events/ajaxgetparticipation"}
 
@@ -175,3 +178,16 @@ class SpielerPlusAccount:
                     exc.code if isinstance(exc, AccountError) else "unexpected_response"
                 )
         return summaries
+
+    async def async_calendar_subscription(self):
+        if not self._authenticated:
+            await self.async_login()
+        for path in ("/events/index", "/events/calendar"):
+            try:
+                html, _ = await self._request("GET", path)
+                value = await asyncio.to_thread(calendar_subscription, html)
+                if value:
+                    return value
+            except AccountError:
+                continue
+        return None

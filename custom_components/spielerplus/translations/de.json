@@ -2,18 +2,49 @@
   "config": {
     "step": {
       "user": {
-        "title": "SpielerPlus-Kalender",
+        "title": "SpielerPlus",
+        "menu_options": {
+          "calendar": "Kalender einrichten",
+          "family": "Weiteres Kind mit vorhandenem Konto"
+        }
+      },
+      "calendar": {
+        "title": "Kind / Kalender einrichten",
         "data": {
           "name": "Kalendername",
           "url": "Privater ICS-Abonnement-Link"
+        },
+        "description": "Anzeigename für dieses Kind. Falls der Kalenderlink automatisch erkannt wurde, ist kein Linkfeld nötig. Andernfalls den privaten Kalenderlink dieser Mitgliedschaft hier eingeben."
+      },
+      "family": {
+        "title": "Vorhandene Anmeldung verwenden",
+        "description": "Die gespeicherte Anmeldung wird für einen getrennten Kind-/Kalendereintrag übernommen.",
+        "data": {
+          "source": "Vorhandener Eintrag"
+        }
+      },
+      "family_team": {
+        "title": "Kind / Mitgliedschaft wählen",
+        "data": {
+          "membership_id": "Kind / Team-Mitgliedschaft"
         }
       }
     },
     "error": {
-      "invalid_url": "Bitte einen gültigen SpielerPlus-ICS-Link eingeben."
+      "invalid_url": "Bitte einen gültigen SpielerPlus-ICS-Link eingeben.",
+      "invalid_auth": "Anmeldung nicht erfolgreich. Bitte die Zugangsdaten prüfen.",
+      "unsupported_login": "Diese Anmeldung wird nicht unterstützt (z. B. zusätzliche Sicherheitsabfrage). Bitte die Webseite verwenden; Schutzfunktionen nicht deaktivieren.",
+      "access_denied": "SpielerPlus verweigert den Zugriff. Es wurden keine Teilnahmen geändert.",
+      "no_memberships": "Keine passende Team-Mitgliedschaft gefunden.",
+      "cannot_connect": "SpielerPlus ist momentan nicht erreichbar.",
+      "response_too_large": "Die Antwort überschreitet die Größenbegrenzung.",
+      "unexpected_response": "Die Antwort wird nicht erkannt. Die Webseite könnte geändert worden sein.",
+      "invalid_name": "Bitte einen Anzeigenamen eingeben."
     },
     "abort": {
-      "already_configured": "Dieser Kalender ist bereits eingerichtet."
+      "already_configured": "Dieser Kalender ist bereits eingerichtet.",
+      "no_account": "Zuerst eine Kontoanmeldung in einem Kalender einrichten.",
+      "no_memberships": "Keine passende Team-Mitgliedschaft gefunden."
     }
   },
   "entity": {
@@ -80,7 +111,8 @@
         "title": "Teilnahme (optional)",
         "menu_options": {
           "account": "SpielerPlus-Konto verbinden",
-          "disable": "Kontoanmeldung entfernen"
+          "disable": "Kontoanmeldung entfernen",
+          "reuse": "Gespeicherte Anmeldung wiederverwenden"
         }
       },
       "account": {
@@ -101,6 +133,12 @@
       "disable": {
         "title": "Kontoanmeldung entfernen",
         "description": "Die optionale Anmeldung wird aus der aktiven Konfiguration entfernt. Der ICS-Kalender bleibt eingerichtet."
+      },
+      "reuse": {
+        "title": "Gespeicherte Anmeldung verwenden",
+        "data": {
+          "source": "Vorhandener Eintrag"
+        }
       }
     },
     "error": {
@@ -113,7 +151,14 @@
       "unexpected_response": "Die Antwort wird nicht erkannt. Die Webseite könnte geändert worden sein."
     },
     "abort": {
-      "no_memberships": "Keine passende Team-Mitgliedschaft gefunden."
+      "no_memberships": "Keine passende Team-Mitgliedschaft gefunden.",
+      "no_account": "Zuerst eine Kontoanmeldung in einem Kalender einrichten."
+    }
+  },
+  "services": {
+    "rebuild_dashboard": {
+      "name": "Familienübersicht aktualisieren",
+      "description": "Erstellt die verwaltete Familienübersicht mit einem Reiter pro Kind neu. Andere Dashboards bleiben erhalten."
     }
   }
 }

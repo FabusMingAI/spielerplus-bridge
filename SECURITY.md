@@ -17,3 +17,5 @@ Please report vulnerabilities without including live links.
 Email/password are stored in the local HA config entry options and can be included in HA backups. Never share `.storage`, account form contents, cookies, CSRF tokens or raw account HTML. Cookies stay in memory in an isolated client session. Active account options can be removed through Configure → Remove account sign-in; this does not erase older backups.
 
 Entity state contains only own response, aggregate group counts, times and sanitized error codes. Participant names and absence reasons are not retained. The adapter has no RSVP-write endpoint. It does not automate additional authentication challenges or disable certificate verification. Account errors do not invalidate successful ICS fetches.
+
+Family setup copies the existing credentials into each child's local config entry; sessions and membership context remain isolated. After changing a password, update each affected entry. Generated dashboards include private display names and entity IDs, so keep them local. They do not include passwords, membership IDs or subscription links.

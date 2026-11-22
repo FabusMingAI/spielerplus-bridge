@@ -32,6 +32,14 @@ Your next training, next match and sports week in Home Assistant. **SpielerPlus 
 
 Training/match classification uses explicit words in the title, such as `Training`, `Spiel`, `Match` and `Turnier`. Unrecognized titles stay in the calendar and weekly list as other events; classification is not an official SpielerPlus event type.
 
+## Two children, one account
+
+Create one integration entry per child, choosing the matching membership and calendar. **Add service → Another child using an existing account** reuses credentials already stored locally. A discoverable calendar link is used automatically; otherwise enter the selected child's private link directly in Home Assistant.
+
+The [family dashboard](docs/FAMILY.md) places children side by side, combines their sports week chronologically and provides individual child tabs. The `spielerplus.rebuild_dashboard` action creates `spielerplus-family.yaml` using registered entity IDs. Register the dashboard once in Home Assistant; existing files without the management marker are preserved. The generated file contains display names and entity IDs, without credentials.
+
+<p><img src="docs/images/dashboard-family.jpg" width="900" alt="Family dashboard with fictional children Lea and Ben"></p>
+
 ## Dashboard
 
 The [dashboard template](dashboard/spielerplus.yaml) has **Overview**, **Changes & status** and **Attendance** views. Its text is German; integration setup and entity names are translated into English and German.
