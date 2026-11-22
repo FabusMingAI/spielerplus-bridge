@@ -1,0 +1,152 @@
+title: SpielerPlus
+views:
+  - title: Überblick
+    path: overview
+    icon: mdi:soccer
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Dein Sport. Deine Woche.
+            heading_style: title
+            icon: mdi:soccer
+          - type: markdown
+            content: |-
+              {% set e = 'sensor.spielerplus_demo_next_training' %}
+              ## Nächstes Training
+
+              {% if states(e) not in ['unknown', 'unavailable'] %}
+              ### {{ as_timestamp(states(e)) | timestamp_custom('%d.%m.%Y · %H:%M') }}
+
+              **{{ state_attr(e, 'title') }}**
+
+              Ort: {{ state_attr(e, 'location') or 'Ort noch offen' }}
+
+              {{ state_attr(e, 'description') or '' }}
+              {% else %}
+              Noch kein Training verfügbar.
+              {% endif %}
+          - type: markdown
+            content: |-
+              {% set e = 'sensor.spielerplus_demo_next_game' %}
+              ## Nächstes Spiel
+
+              {% if states(e) not in ['unknown', 'unavailable'] %}
+              ### {{ state_attr(e, 'title') }}
+
+              **{{ as_timestamp(states(e)) | timestamp_custom('%d.%m.%Y · %H:%M') }}**
+
+              Ort: {{ state_attr(e, 'location') or 'Ort noch offen' }}
+
+              {{ state_attr(e, 'description') or '' }}
+              {% else %}
+              Noch kein Spiel verfügbar.
+              {% endif %}
+          - type: tile
+            entity: sensor.spielerplus_demo_countdown
+            name: Countdown
+            icon: mdi:timer-outline
+          - type: tile
+            entity: sensor.spielerplus_demo_events_week
+            name: Nächste 7 Tage
+            icon: mdi:calendar-week
+      - type: grid
+        cards:
+          - type: heading
+            heading: Die nächsten 7 Tage
+            heading_style: title
+            icon: mdi:calendar-week
+          - type: markdown
+            content: |-
+              {% set e = 'sensor.spielerplus_demo_events_week' %}
+              {% if states(e) == 'unavailable' %}
+              **Kalender derzeit nicht erreichbar.** Bitte den Abrufstatus prüfen.
+              {% else %}
+              {% for event in state_attr(e, 'events') or [] %}
+              ### {{ 'Training ·' if event.event_type == 'training' else 'Spiel ·' if event.event_type == 'game' else 'Termin ·' }} {{ as_timestamp(event.start) | timestamp_custom('%d.%m. · %H:%M') }}
+
+              **{{ event.title }}**
+
+              {{ event.location or 'Ort noch offen' }}
+
+              ---
+              {% else %}
+              Keine Nächste 7 Tage.
+              {% endfor %}
+              {% endif %}
+          - type: markdown
+            content: |-
+              {% set healthy = is_state('binary_sensor.spielerplus_demo_connection', 'on') %}
+              ### {{ 'Kalender verbunden' if healthy else 'Abruf prüfen' }}
+
+              {% set last = states('sensor.spielerplus_demo_last_success') %}
+              Letzter erfolgreicher Abruf: **{{ as_timestamp(last) | timestamp_custom('%d.%m. · %H:%M') if last not in ['unknown', 'unavailable'] else 'noch keiner' }}**
+
+              Abruf alle 15 Minuten · Countdown jede Minute
+          - type: tile
+            hide_state: true
+            entity: button.spielerplus_demo_refresh
+            name: Kalender aktualisieren
+            icon: mdi:refresh
+            tap_action:
+              action: perform-action
+              perform_action: button.press
+              target:
+                entity_id: button.spielerplus_demo_refresh
+  - title: Änderungen & Status
+    path: status
+    icon: mdi:calendar-sync
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Änderungen im Blick
+            heading_style: title
+            icon: mdi:calendar-sync
+          - type: markdown
+            content: |-
+              {% set changes = state_attr('sensor.spielerplus_demo_last_change', 'changes') or [] %}
+              {% for change in changes %}
+              {% set event = change.after or change.before %}
+              ### {{ {'added': 'Neu', 'updated': 'Geändert', 'removed': 'Entfernt'}[change.change] }}: {{ event.title }}
+
+              {{ as_timestamp(event.start) | timestamp_custom('%d.%m.%Y · %H:%M') }} · {{ event.location or 'Ort noch offen' }}
+
+              {% if change.before and change.after and change.before.start != change.after.start %}
+              Vorher: {{ as_timestamp(change.before.start) | timestamp_custom('%d.%m. · %H:%M') }}
+              {% endif %}
+              ---
+              {% else %}
+              Seit dem Start der Integration wurde keine Terminänderung erkannt.
+              {% endfor %}
+          - type: markdown
+            content: |-
+              **So funktioniert der Vergleich:** Nach jedem erfolgreichen Abruf werden neue, geänderte und entfernte kommende Termine erkannt. Der erste Abruf nach einem Neustart bildet die Ausgangsbasis.
+
+              Abgesagte Termine erscheinen nicht als nächstes Training oder Spiel. Die Einordnung erfolgt anhand des Titels.
+      - type: grid
+        cards:
+          - type: heading
+            heading: Verbindung & Diagnose
+            heading_style: title
+            icon: mdi:cloud-check-outline
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - entity: binary_sensor.spielerplus_demo_connection
+                name: Kalenderverbindung
+              - entity: sensor.spielerplus_demo_last_success
+                name: Letzter erfolgreicher Abruf
+              - entity: sensor.spielerplus_demo_last_change
+                name: Letzte erkannte Änderung
+              - entity: button.spielerplus_demo_refresh
+                name: Jetzt aktualisieren
+          - type: markdown
+            content: |-
+              **SpielerPlus Bridge · v0.2.0**
+
+              Kalenderdaten werden ausschließlich gelesen. Zu-/Absagen und Teilnehmerlisten gehören noch nicht zu dieser Version.

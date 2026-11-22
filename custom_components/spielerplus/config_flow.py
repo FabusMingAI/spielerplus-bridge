@@ -1,4 +1,5 @@
 """Configure a private SpielerPlus calendar from Home Assistant UI."""
+
 from urllib.parse import urlparse
 
 import voluptuous as vol
@@ -16,11 +17,17 @@ class SpielerPlusConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             url = user_input[CONF_URL].strip()
             if url.startswith("webcal://"):
-                url = "https://" + url[len("webcal://"):]
+                url = "https://" + url[len("webcal://") :]
             parsed = urlparse(url)
-            if (parsed.scheme != "https" or parsed.netloc != "www.spielerplus.de"
-                    or parsed.path != "/events/ics" or not parsed.query
-                    or parsed.username or parsed.password or parsed.fragment):
+            if (
+                parsed.scheme != "https"
+                or parsed.netloc != "www.spielerplus.de"
+                or parsed.path != "/events/ics"
+                or not parsed.query
+                or parsed.username
+                or parsed.password
+                or parsed.fragment
+            ):
                 errors["base"] = "invalid_url"
             else:
                 await self.async_set_unique_id(url)
@@ -31,9 +38,11 @@ class SpielerPlusConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({
-                vol.Required(CONF_NAME): str,
-                vol.Required(CONF_URL): str,
-            }),
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_NAME): str,
+                    vol.Required(CONF_URL): str,
+                }
+            ),
             errors=errors,
         )

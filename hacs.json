@@ -1,1 +1,7 @@
-{"name":"SpielerPlus Calendar","render_readme":true,"domains":["spielerplus"]}
+{
+  "name": "SpielerPlus Bridge",
+  "render_readme": true,
+  "domains": [
+    "spielerplus"
+  ]
+}

@@ -1,0 +1,99 @@
+[
+  {
+    "sensor": [
+      {
+        "name": "SpielerPlus Demo Next Training",
+        "unique_id": "spielerplus_screenshot_next_training",
+        "state": "2026-11-23T18:00:00+01:00",
+        "attributes": {
+          "title": "{{ '\"Training · U15\"' | from_json }}",
+          "start": "{{ '\"2026-11-23T18:00:00+01:00\"' | from_json }}",
+          "end": "{{ '\"2026-11-23T19:30:00+01:00\"' | from_json }}",
+          "all_day": "{{ 'false' | from_json }}",
+          "location": "{{ '\"Sportpark Beispiel · Platz 2\"' | from_json }}",
+          "description": "{{ '\"Schienbeinschoner und Trinkflasche mitbringen.\"' | from_json }}",
+          "status": "{{ '\"CONFIRMED\"' | from_json }}",
+          "event_type": "{{ '\"training\"' | from_json }}",
+          "event_url": "{{ '\"\"' | from_json }}",
+          "latitude": "{{ '48.1' | from_json }}",
+          "longitude": "{{ '11.5' | from_json }}"
+        },
+        "device_class": "timestamp"
+      },
+      {
+        "name": "SpielerPlus Demo Next Game",
+        "unique_id": "spielerplus_screenshot_next_game",
+        "state": "2026-11-28T11:00:00+01:00",
+        "attributes": {
+          "title": "{{ '\"SV Beispiel – FC Musterstadt\"' | from_json }}",
+          "start": "{{ '\"2026-11-28T11:00:00+01:00\"' | from_json }}",
+          "end": "{{ '\"2026-11-28T12:30:00+01:00\"' | from_json }}",
+          "all_day": "{{ 'false' | from_json }}",
+          "location": "{{ '\"Stadion am Park · Musterstadt\"' | from_json }}",
+          "description": "{{ '\"Treffpunkt 10:15 Uhr am Haupteingang.\"' | from_json }}",
+          "status": "{{ '\"CONFIRMED\"' | from_json }}",
+          "event_type": "{{ '\"game\"' | from_json }}",
+          "event_url": "{{ '\"\"' | from_json }}",
+          "latitude": "{{ '48.1' | from_json }}",
+          "longitude": "{{ '11.5' | from_json }}"
+        },
+        "device_class": "timestamp"
+      },
+      {
+        "name": "SpielerPlus Demo Countdown",
+        "unique_id": "spielerplus_screenshot_countdown",
+        "state": "1589",
+        "attributes": {
+          "title": "{{ '\"Training · U15\"' | from_json }}",
+          "start": "{{ '\"2026-11-23T18:00:00+01:00\"' | from_json }}",
+          "end": "{{ '\"2026-11-23T19:30:00+01:00\"' | from_json }}",
+          "all_day": "{{ 'false' | from_json }}",
+          "location": "{{ '\"Sportpark Beispiel · Platz 2\"' | from_json }}",
+          "description": "{{ '\"Schienbeinschoner und Trinkflasche mitbringen.\"' | from_json }}",
+          "status": "{{ '\"CONFIRMED\"' | from_json }}",
+          "event_type": "{{ '\"training\"' | from_json }}",
+          "event_url": "{{ '\"\"' | from_json }}",
+          "latitude": "{{ '48.1' | from_json }}",
+          "longitude": "{{ '11.5' | from_json }}"
+        },
+        "device_class": "duration",
+        "unit_of_measurement": "min"
+      },
+      {
+        "name": "SpielerPlus Demo Events Week",
+        "unique_id": "spielerplus_screenshot_events_week",
+        "state": "3",
+        "attributes": {
+          "events": "{{ '[{\"title\": \"Training · U15\", \"start\": \"2026-11-23T18:00:00+01:00\", \"end\": \"2026-11-23T19:30:00+01:00\", \"all_day\": false, \"location\": \"Sportpark Beispiel · Platz 2\", \"description\": \"Schienbeinschoner und Trinkflasche mitbringen.\", \"status\": \"CONFIRMED\", \"event_type\": \"training\", \"event_url\": \"\", \"latitude\": 48.1, \"longitude\": 11.5}, {\"title\": \"Training · U15\", \"start\": \"2026-11-25T18:00:00+01:00\", \"end\": \"2026-11-25T19:30:00+01:00\", \"all_day\": false, \"location\": \"Sportpark Beispiel · Platz 2\", \"description\": \"Technik und Spielformen.\", \"status\": \"CONFIRMED\", \"event_type\": \"training\", \"event_url\": \"\", \"latitude\": 48.1, \"longitude\": 11.5}, {\"title\": \"SV Beispiel – FC Musterstadt\", \"start\": \"2026-11-28T11:00:00+01:00\", \"end\": \"2026-11-28T12:30:00+01:00\", \"all_day\": false, \"location\": \"Stadion am Park · Musterstadt\", \"description\": \"Treffpunkt 10:15 Uhr am Haupteingang.\", \"status\": \"CONFIRMED\", \"event_type\": \"game\", \"event_url\": \"\", \"latitude\": 48.1, \"longitude\": 11.5}]' | from_json }}"
+        }
+      },
+      {
+        "name": "SpielerPlus Demo Last Success",
+        "unique_id": "spielerplus_screenshot_last_success",
+        "state": "2026-11-22T15:30:43.778527+01:00",
+        "attributes": {
+          "cached_events": "{{ '12' | from_json }}",
+          "last_error": "{{ 'null' | from_json }}"
+        },
+        "device_class": "timestamp"
+      },
+      {
+        "name": "SpielerPlus Demo Last Change",
+        "unique_id": "spielerplus_screenshot_last_change",
+        "state": "2026-11-22T15:10:43.778527+01:00",
+        "attributes": {
+          "changes": "{{ '[{\"change\": \"updated\", \"uid\": \"fictional-game\", \"before\": {\"title\": \"SV Beispiel – FC Musterstadt\", \"start\": \"2026-11-28T10:00:00+01:00\", \"end\": \"2026-11-28T12:30:00+01:00\", \"all_day\": false, \"location\": \"Stadion am Park · Musterstadt\", \"description\": \"Treffpunkt 10:15 Uhr am Haupteingang.\", \"status\": \"CONFIRMED\", \"event_type\": \"game\", \"event_url\": \"\", \"latitude\": 48.1, \"longitude\": 11.5}, \"after\": {\"title\": \"SV Beispiel – FC Musterstadt\", \"start\": \"2026-11-28T11:00:00+01:00\", \"end\": \"2026-11-28T12:30:00+01:00\", \"all_day\": false, \"location\": \"Stadion am Park · Musterstadt\", \"description\": \"Treffpunkt 10:15 Uhr am Haupteingang.\", \"status\": \"CONFIRMED\", \"event_type\": \"game\", \"event_url\": \"\", \"latitude\": 48.1, \"longitude\": 11.5}}]' | from_json }}"
+        },
+        "device_class": "timestamp"
+      }
+    ],
+    "binary_sensor": [
+      {
+        "name": "SpielerPlus Demo Connection",
+        "unique_id": "spielerplus_screenshot_connection",
+        "state": "{{ true }}",
+        "device_class": "connectivity"
+      }
+    ]
+  }
+]

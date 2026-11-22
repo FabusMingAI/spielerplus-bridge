@@ -1,0 +1,51 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SpielerPlus-Kalender",
+        "data": {
+          "name": "Kalendername",
+          "url": "Privater ICS-Abonnement-Link"
+        }
+      }
+    },
+    "error": {
+      "invalid_url": "Bitte einen gültigen SpielerPlus-ICS-Link eingeben."
+    },
+    "abort": {
+      "already_configured": "Dieser Kalender ist bereits eingerichtet."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_training": {
+        "name": "Nächstes Training"
+      },
+      "next_game": {
+        "name": "Nächstes Spiel"
+      },
+      "countdown": {
+        "name": "Countdown"
+      },
+      "events_week": {
+        "name": "Termine nächste 7 Tage"
+      },
+      "last_success": {
+        "name": "Letzter erfolgreicher Abruf"
+      },
+      "last_change": {
+        "name": "Letzte Kalenderänderung"
+      }
+    },
+    "binary_sensor": {
+      "connection": {
+        "name": "Kalenderverbindung"
+      }
+    },
+    "button": {
+      "refresh": {
+        "name": "Kalender aktualisieren"
+      }
+    }
+  }
+}

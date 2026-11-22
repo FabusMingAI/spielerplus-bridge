@@ -1,0 +1,31 @@
+# Merge these examples into your automations.yaml; edit the entity ID first.
+- id: spielerplus_calendar_change_example
+  alias: SpielerPlus – Terminänderung
+  mode: queued
+  triggers:
+    - trigger: event
+      event_type: spielerplus_calendar_changed
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: SpielerPlus – Kalender geändert
+        message: >-
+          {% set e = trigger.event.data.after or trigger.event.data.before %}
+          {{ {'added': 'Neu', 'updated': 'Geändert', 'removed': 'Entfernt'}[trigger.event.data.change] }}:
+          {{ e.title }} · {{ e.start }} · {{ e.location }}
+# Uses only the local Home Assistant notification area; no phone service required.
+- id: spielerplus_calendar_reminder_example
+  alias: SpielerPlus – In einer Stunde
+  mode: queued
+  triggers:
+    - trigger: calendar
+      entity_id: calendar.spielerplus_demo
+      event: start
+      offset: '-01:00:00'
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: SpielerPlus – Termin in einer Stunde
+        message: >-
+          {{ trigger.calendar_event.summary }}
+          {% if trigger.calendar_event.location %} · {{ trigger.calendar_event.location }}{% endif %}
