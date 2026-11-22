@@ -1,5 +1,6 @@
 """Read-only SpielerPlus MCP server over stdio."""
 import json
+import logging
 import os
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -10,6 +11,8 @@ from mcp.server.fastmcp import FastMCP
 from .feeds import MAX_ICS_BYTES, parse_events, validate_url
 
 mcp = FastMCP("SpielerPlus Calendar")
+# HTTPX logs complete request URLs at INFO, including private ICS credentials.
+logging.getLogger("httpx").setLevel(logging.WARNING)
 TZ = ZoneInfo(os.getenv("SPIELERPLUS_TIMEZONE", "Europe/Berlin"))
 
 

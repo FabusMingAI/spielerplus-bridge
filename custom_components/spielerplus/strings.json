@@ -11,6 +11,41 @@
     },
     "error": {
       "invalid_url": "Enter a valid SpielerPlus ICS URL"
+    },
+    "abort": {
+      "already_configured": "This calendar is already configured."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_training": {
+        "name": "Next training"
+      },
+      "next_game": {
+        "name": "Next game"
+      },
+      "countdown": {
+        "name": "Countdown"
+      },
+      "events_week": {
+        "name": "Events next 7 days"
+      },
+      "last_success": {
+        "name": "Last successful fetch"
+      },
+      "last_change": {
+        "name": "Last calendar change"
+      }
+    },
+    "binary_sensor": {
+      "connection": {
+        "name": "Calendar connection"
+      }
+    },
+    "button": {
+      "refresh": {
+        "name": "Refresh calendar"
+      }
     }
   }
 }

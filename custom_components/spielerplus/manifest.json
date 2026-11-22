@@ -1,7 +1,7 @@
 {
   "domain": "spielerplus",
   "name": "SpielerPlus Calendar",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "documentation": "https://github.com/FabusMingAI/spielerplus-bridge",
   "issue_tracker": "https://github.com/FabusMingAI/spielerplus-bridge/issues",
   "codeowners": [],
