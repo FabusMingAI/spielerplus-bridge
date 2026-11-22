@@ -1,0 +1,4 @@
+mcp>=1.0,<3
+httpx>=0.27,<1
+icalendar>=6,<8
+recurring-ical-events>=3,<5
