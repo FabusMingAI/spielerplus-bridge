@@ -7,6 +7,7 @@ from homeassistant.const import EntityCategory, UnitOfTime
 from homeassistant.util import dt as dt_util
 from .const import DOMAIN
 from .events import upcoming
+from .attendance import STATUSES, event_ref
 from .entity import SpielerPlusEntity
 
 SENSORS = (
@@ -21,9 +22,18 @@ SENSORS = (
 
 async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_entities(
-        [SpielerPlusSensor(coordinator, entry, *description) for description in SENSORS]
-    )
+    entities = [
+        SpielerPlusSensor(coordinator, entry, *description) for description in SENSORS
+    ]
+    if coordinator.account_client is not None:
+        entities.extend(
+            [
+                SpielerPlusParticipation(coordinator, entry, kind)
+                for kind in ("training", "game")
+            ]
+        )
+        entities.append(SpielerPlusAccountFetch(coordinator, entry))
+    async_add_entities(entities)
 
 
 class SpielerPlusSensor(SpielerPlusEntity, SensorEntity):
@@ -93,3 +103,78 @@ class SpielerPlusSensor(SpielerPlusEntity, SensorEntity):
             }
         event = self._next()
         return event.details() if event else {}
+
+
+class SpielerPlusParticipation(SpielerPlusEntity, SensorEntity):
+    _attr_device_class = SensorDeviceClass.ENUM
+    _attr_options = list(STATUSES)
+    _attr_icon = "mdi:account-check-outline"
+
+    def __init__(self, coordinator, entry, kind):
+        super().__init__(coordinator, entry)
+        self.kind = kind
+        self._attr_unique_id = f"{entry.entry_id}_{kind}_participation"
+        self._attr_translation_key = f"{kind}_participation"
+
+    def _summary(self):
+        events = upcoming(self.coordinator.data or [], dt_util.utcnow(), self.kind)
+        if not events:
+            return None
+        key = event_ref(events[0].url)
+        return self.coordinator.participation.get(key) if key else None
+
+    @property
+    def available(self):
+        return (
+            super().available
+            and self.coordinator.account_error is None
+            and self.coordinator.account_last_success is not None
+            and self._summary() is not None
+        )
+
+    @property
+    def native_value(self):
+        summary = self._summary()
+        return summary["own_status"] if summary else None
+
+    @property
+    def extra_state_attributes(self):
+        summary = self._summary()
+        return (
+            {
+                "counts": summary["counts"],
+                **summary["times"],
+                "detail_error": summary["detail_error"],
+                "coverage": "first_5_listed_events",
+            }
+            if summary
+            else {}
+        )
+
+
+class SpielerPlusAccountFetch(SpielerPlusEntity, SensorEntity):
+    _attr_device_class = SensorDeviceClass.TIMESTAMP
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_translation_key = "account_last_success"
+    _attr_icon = "mdi:account-clock-outline"
+
+    def __init__(self, coordinator, entry):
+        super().__init__(coordinator, entry)
+        self._attr_unique_id = f"{entry.entry_id}_account_last_success"
+
+    @property
+    def available(self):
+        return True
+
+    @property
+    def native_value(self):
+        return self.coordinator.account_last_success
+
+    @property
+    def extra_state_attributes(self):
+        return {
+            "last_error": self.coordinator.account_error,
+            "events_loaded": len(self.coordinator.participation),
+            "coverage": "first_5_listed_events",
+            "member_names_stored": False,
+        }

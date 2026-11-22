@@ -1,6 +1,7 @@
 """One bounded calendar fetch shared by all subscription entities."""
 
 from datetime import timedelta
+import asyncio
 import logging
 
 import aiohttp
@@ -9,7 +10,9 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 from homeassistant.util import dt as dt_util
 
 from .const import CONF_URL, DOMAIN
-from .events import MAX_ICS_BYTES, detect_changes, parse_calendar
+from .events import MAX_ICS_BYTES, calendar_notice, detect_changes, parse_calendar
+from .attendance import AccountError
+from .account import SpielerPlusAccount
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -29,6 +32,21 @@ class SpielerPlusCoordinator(DataUpdateCoordinator):
         self.changes = []
         self.last_error = None
         self.window_end = None
+        self.calendar_notice = None
+        self.account_client = None
+        self.participation = {}
+        self.account_error = None
+        self.account_last_success = None
+        options = entry.options
+        if all(
+            options.get(key)
+            for key in ("account_email", "account_password", "membership_id")
+        ):
+            self.account_client = SpielerPlusAccount(
+                options["account_email"],
+                options["account_password"],
+                options["membership_id"],
+            )
 
     async def _async_update_data(self):
         now = dt_util.utcnow()
@@ -57,6 +75,21 @@ class SpielerPlusCoordinator(DataUpdateCoordinator):
         except (aiohttp.ClientError, TimeoutError, ValueError) as exc:
             self.last_error = type(exc).__name__
             raise UpdateFailed(f"Calendar refresh failed ({self.last_error})") from None
+        self.calendar_notice = calendar_notice(events)
+        if self.calendar_notice:
+            events = []
+        # Optional account failures must not invalidate a successful ICS fetch.
+        if self.account_client is not None:
+            try:
+                self.participation = await asyncio.wait_for(
+                    self.account_client.async_fetch(), timeout=45
+                )
+                self.account_last_success = dt_util.utcnow()
+                self.account_error = None
+            except AccountError as exc:
+                self.account_error = exc.code
+            except TimeoutError:
+                self.account_error = "cannot_connect"
         self.last_success = now
         self.last_error = None
         if self.data is not None:

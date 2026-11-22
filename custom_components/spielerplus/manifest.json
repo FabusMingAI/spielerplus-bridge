@@ -1,7 +1,7 @@
 {
   "domain": "spielerplus",
   "name": "SpielerPlus Calendar",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "documentation": "https://github.com/FabusMingAI/spielerplus-bridge",
   "issue_tracker": "https://github.com/FabusMingAI/spielerplus-bridge/issues",
   "codeowners": [],
@@ -10,6 +10,7 @@
   "iot_class": "cloud_polling",
   "requirements": [
     "icalendar>=6.0.0,<8",
-    "recurring-ical-events>=3.0.0,<5"
+    "recurring-ical-events>=3.0.0,<5",
+    "beautifulsoup4>=4.12,<5"
   ]
 }

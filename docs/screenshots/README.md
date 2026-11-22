@@ -2,11 +2,14 @@
 
 The public images are genuine Home Assistant screenshots of the dashboard template,
 rendered with **fictional entities and appointments**. No real team, child, account
-identifier, private calendar URL or exported ICS file is included. The current
-screenshots use the browser's default portrait viewport; they do not claim a
-separate desktop-device test. No third-party frontend cards are required.
+identifier, private calendar URL or exported ICS file is included. The screenshots use the browser's default viewport at capture time;
+no viewport override is required. No third-party frontend cards are required.
 
+- `../images/dashboard-family.jpg`: two fictional children, Lea and Ben, with isolated responses and a shared sports week.
+- `family-fixtures.yaml`: reproducible fictional entities for both children.
 - `../images/dashboard-overview.jpg`: next training/game, countdown and sports week.
+- `../images/dashboard-attendance.jpg`: fictional own responses, counts and meeting/start times.
+- `../images/account-setup.jpg`: the empty local account dialog, captured before credentials were entered.
 - `../images/dashboard-status.jpg`: an example moved match and connection diagnostics.
 - `template-fixtures.yaml`: Home Assistant template entities with synthetic values.
   The `from_json` templates preserve list/dictionary attributes used by the dashboard.
@@ -38,3 +41,7 @@ separate desktop-device test. No third-party frontend cards are required.
 
 The fixture button only records a demo press. The real integration's refresh
 button is separately tested against the coordinator by the runtime test suite.
+
+## Family screenshot
+
+Use `family-fixtures.yaml` instead of the single-child template include. Generate a demo dashboard with `build_family_dashboard` from `custom_components/spielerplus/dashboard.py`, passing only fictional entry IDs/names and the `spielerplus_demo_*` / `spielerplus_demo2_*` entity IDs. Register it as a separate YAML dashboard. Do not run the registry-based rebuild action for public screenshots: that would use real child names. Capture the family overview with the sidebar collapsed; remove the demo registration and template include afterward.

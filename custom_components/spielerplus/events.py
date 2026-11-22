@@ -24,6 +24,16 @@ def classify(title):
     return "other"
 
 
+def calendar_notice(events):
+    """Recognize the provider's subscription notice, not an actual appointment."""
+    if events and all(
+        event.title.strip().casefold() in {"premium-feature", "premium feature"}
+        for event in events
+    ):
+        return "calendar_premium_required"
+    return None
+
+
 def event_url(value):
     """Expose official event pages, never the subscription URL."""
     parsed = urlparse(value)

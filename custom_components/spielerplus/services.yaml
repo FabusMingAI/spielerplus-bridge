@@ -1,0 +1,3 @@
+rebuild_dashboard:
+  name: Rebuild family dashboard
+  description: Rebuild the managed family dashboard from configured calendars and memberships. Other dashboards are preserved.

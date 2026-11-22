@@ -13,7 +13,9 @@
 
 ## Next
 
-- [ ] Optional read-only account adapter for attendance, after authenticated feasibility testing
+- [x] v0.3.0 preview: optional read-only account adapter, locally configured and live-tested
+- [ ] Attendance pagination beyond the first five listed events
+- [ ] Additional authentication challenge support without weakening account protections
 - [ ] User-configurable classification overrides and polling preferences
 - [ ] Persist change baselines/history across restart
 - [ ] Authenticated remote MCP gateway

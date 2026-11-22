@@ -1,5 +1,16 @@
 # Changelog / Änderungsprotokoll
 
+## 0.3.0 — preview / Vorschau — 2026-11-22
+
+- EN: Multiple children using one account: reuse locally stored credentials, select a membership per entry, discover calendar links when available, and generate a family dashboard with separate child tabs and a combined sports week.
+- DE: Mehrere Kinder über ein Konto: lokal gespeicherte Anmeldung übernehmen, Mitgliedschaft je Eintrag wählen, verfügbare Kalenderlinks erkennen und ein Familien-Dashboard mit eigenen Kind-Tabs und gemeinsamer Sportwoche erzeugen.
+
+- EN: Optional local account setup with membership selection; read-only own attendance and aggregate counts for the next training/game, separate meeting/start times, account diagnostics and an Attendance dashboard view.
+- DE: Freiwillige lokale Kontoanmeldung mit Mitgliedschaftsauswahl; eigener Teilnahmestatus und Gruppen-Zähler für nächstes Training/Spiel, getrennte Treff-/Beginnzeiten, Kontodiagnose und Teilnahme-Dashboard.
+- EN: No member names or absence reasons in entity data. Private cookie session, bounded HTML responses, same-origin redirects, endpoint allowlist and no automatic retries after confirmed authentication failures. Account errors leave successful ICS fetches healthy.
+- DE: Keine Namen oder Abwesenheitsgründe in Entitätsdaten. Private Cookie-Sitzung, begrenzte HTML-Antworten, Weiterleitungen nur zum offiziellen Ursprung, Endpunkt-Allowlist und keine automatischen Wiederholungen nach eindeutigen Anmeldefehlern. Kontofehler lassen erfolgreiche ICS-Abrufe verfügbar.
+- EN/DE: Coverage / Abdeckung: first five listed events / erste fünf aufgelistete Termine, no pagination / ohne weitere Seiten. Missing counts stay unknown / fehlende Zähler bleiben unbekannt. Additional login challenges are not automated / zusätzliche Sicherheitsabfragen werden nicht automatisiert.
+
 ## 0.2.0 — preview / Vorschau — 2026-11-22
 
 ### Added / Neu
