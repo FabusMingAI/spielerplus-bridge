@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r spielerplus_mcp/requirements.txt pytest pyyaml
+          pip install -r requirements-dev.txt
       - name: Validate repository metadata and docs
         run: python scripts/validate_repository.py
       - name: Compile source
@@ -56,4 +56,4 @@ jobs:
             -v "$PWD/custom_components:/config/custom_components:ro" \
             -v "$PWD/tests_ha:/tests:ro" \
             ghcr.io/home-assistant/home-assistant:2026.10.1 \
-            -c 'python -m pip install "icalendar>=6,<8" "recurring-ical-events>=3,<5" && python /tests/test_runtime.py'
+            -c 'python -m pip install "icalendar>=6,<8" "recurring-ical-events>=3,<5" "beautifulsoup4>=4.12,<5" && python /tests/test_runtime.py && python /tests/test_account.py'

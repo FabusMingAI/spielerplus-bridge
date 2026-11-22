@@ -2,11 +2,12 @@
 
 The public images are genuine Home Assistant screenshots of the dashboard template,
 rendered with **fictional entities and appointments**. No real team, child, account
-identifier, private calendar URL or exported ICS file is included. The current
-screenshots use the browser's default portrait viewport; they do not claim a
-separate desktop-device test. No third-party frontend cards are required.
+identifier, private calendar URL or exported ICS file is included. The screenshots use the browser's default viewport at capture time;
+no viewport override is required. No third-party frontend cards are required.
 
 - `../images/dashboard-overview.jpg`: next training/game, countdown and sports week.
+- `../images/dashboard-attendance.jpg`: fictional own responses, counts and meeting/start times.
+- `../images/account-setup.jpg`: the empty local account dialog, captured before credentials were entered.
 - `../images/dashboard-status.jpg`: an example moved match and connection diagnostics.
 - `template-fixtures.yaml`: Home Assistant template entities with synthetic values.
   The `from_json` templates preserve list/dictionary attributes used by the dashboard.

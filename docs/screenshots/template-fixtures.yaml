@@ -85,12 +85,48 @@
           "changes": "{{ '[{\"change\": \"updated\", \"uid\": \"fictional-game\", \"before\": {\"title\": \"SV Beispiel – FC Musterstadt\", \"start\": \"2026-11-28T10:00:00+01:00\", \"end\": \"2026-11-28T12:30:00+01:00\", \"all_day\": false, \"location\": \"Stadion am Park · Musterstadt\", \"description\": \"Treffpunkt 10:15 Uhr am Haupteingang.\", \"status\": \"CONFIRMED\", \"event_type\": \"game\", \"event_url\": \"\", \"latitude\": 48.1, \"longitude\": 11.5}, \"after\": {\"title\": \"SV Beispiel – FC Musterstadt\", \"start\": \"2026-11-28T11:00:00+01:00\", \"end\": \"2026-11-28T12:30:00+01:00\", \"all_day\": false, \"location\": \"Stadion am Park · Musterstadt\", \"description\": \"Treffpunkt 10:15 Uhr am Haupteingang.\", \"status\": \"CONFIRMED\", \"event_type\": \"game\", \"event_url\": \"\", \"latitude\": 48.1, \"longitude\": 11.5}}]' | from_json }}"
         },
         "device_class": "timestamp"
+      },
+      {
+        "name": "SpielerPlus Demo Training Participation",
+        "unique_id": "spielerplus_screenshot_training_participation",
+        "state": "accepted",
+        "attributes": {
+          "counts": "{{ '{\"accepted\": 12, \"uncertain\": 1, \"declined\": 2, \"pending\": 4, \"not_nominated\": 0}' | from_json }}",
+          "meeting_time": "{{ '\"17:45\"' | from_json }}",
+          "start_time": "{{ '\"18:00\"' | from_json }}",
+          "detail_error": "{{ 'null' | from_json }}",
+          "coverage": "{{ '\"first_5_listed_events\"' | from_json }}"
+        }
+      },
+      {
+        "name": "SpielerPlus Demo Game Participation",
+        "unique_id": "spielerplus_screenshot_game_participation",
+        "state": "pending",
+        "attributes": {
+          "counts": "{{ '{\"accepted\": 8, \"uncertain\": 2, \"declined\": 3, \"pending\": 6, \"not_nominated\": 1}' | from_json }}",
+          "meeting_time": "{{ '\"09:30\"' | from_json }}",
+          "start_time": "{{ '\"10:00\"' | from_json }}",
+          "detail_error": "{{ 'null' | from_json }}",
+          "coverage": "{{ '\"first_5_listed_events\"' | from_json }}"
+        }
+      },
+      {
+        "name": "SpielerPlus Demo Account Last Success",
+        "unique_id": "spielerplus_screenshot_account_last_success",
+        "state": "2026-11-22T16:00:00+01:00",
+        "device_class": "timestamp"
       }
     ],
     "binary_sensor": [
       {
         "name": "SpielerPlus Demo Connection",
         "unique_id": "spielerplus_screenshot_connection",
+        "state": "{{ true }}",
+        "device_class": "connectivity"
+      },
+      {
+        "name": "SpielerPlus Demo Account Connection",
+        "unique_id": "spielerplus_screenshot_account_connection",
         "state": "{{ true }}",
         "device_class": "connectivity"
       }

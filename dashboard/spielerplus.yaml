@@ -147,6 +147,88 @@ views:
                 name: Jetzt aktualisieren
           - type: markdown
             content: |-
-              **SpielerPlus Bridge · v0.2.0**
+              **SpielerPlus Bridge · v0.3.0**
 
-              Kalenderdaten werden ausschließlich gelesen. Zu-/Absagen und Teilnehmerlisten gehören noch nicht zu dieser Version.
+              Kalenderdaten werden ausschließlich gelesen. Die optionale Kontoanmeldung liefert eigene Teilnahmestatus und Gruppen-Zähler; schreibende Zu-/Absagen sind nicht enthalten.
+  - title: Teilnahme
+    path: attendance
+    icon: mdi:account-group-outline
+    type: sections
+    max_columns: 2
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Meine Teilnahme
+            heading_style: title
+            icon: mdi:account-check-outline
+          - type: markdown
+            content: |-
+              {% set e = 'sensor.spielerplus_demo_training_participation' %}
+              {% set labels = {'accepted':'Zugesagt','uncertain':'Unsicher','declined':'Abgesagt / abwesend','pending':'Noch nicht geantwortet','not_nominated':'Nicht nominiert'} %}
+              ## Nächstes Training
+
+              **Eigene Antwort: {{ labels.get(states(e), 'Nicht verfügbar / unbekannt') }}**
+
+              {% set c = (state_attr(e, 'counts') or {}) if is_state('binary_sensor.spielerplus_demo_account_connection', 'on') and states(e) != 'unavailable' else {} %}
+              | Zusagen | Unsicher | Absagen |
+              | :---: | :---: | :---: |
+              | {{ c.get('accepted') if c.get('accepted') is not none else '?' }} | {{ c.get('uncertain') if c.get('uncertain') is not none else '?' }} | {{ c.get('declined') if c.get('declined') is not none else '?' }} |
+
+              Offen: **{{ c.get('pending') if c.get('pending') is not none else '?' }}** · Nicht nominiert: **{{ c.get('not_nominated') if c.get('not_nominated') is not none else '?' }}**
+
+              Treffen: **{{ (state_attr(e, 'meeting_time') or 'nicht angegeben') if c else 'nicht verfügbar' }}** · Beginn: **{{ (state_attr(e, 'start_time') or 'nicht angegeben') if c else 'nicht verfügbar' }}**
+          - type: markdown
+            content: |-
+              {% set e = 'sensor.spielerplus_demo_game_participation' %}
+              {% set labels = {'accepted':'Zugesagt','uncertain':'Unsicher','declined':'Abgesagt / abwesend','pending':'Noch nicht geantwortet','not_nominated':'Nicht nominiert'} %}
+              ## Nächstes Spiel
+
+              **Eigene Antwort: {{ labels.get(states(e), 'Nicht verfügbar / unbekannt') }}**
+
+              {% set c = (state_attr(e, 'counts') or {}) if is_state('binary_sensor.spielerplus_demo_account_connection', 'on') and states(e) != 'unavailable' else {} %}
+              | Zusagen | Unsicher | Absagen |
+              | :---: | :---: | :---: |
+              | {{ c.get('accepted') if c.get('accepted') is not none else '?' }} | {{ c.get('uncertain') if c.get('uncertain') is not none else '?' }} | {{ c.get('declined') if c.get('declined') is not none else '?' }} |
+
+              Offen: **{{ c.get('pending') if c.get('pending') is not none else '?' }}** · Nicht nominiert: **{{ c.get('not_nominated') if c.get('not_nominated') is not none else '?' }}**
+
+              Treffen: **{{ (state_attr(e, 'meeting_time') or 'nicht angegeben') if c else 'nicht verfügbar' }}** · Beginn: **{{ (state_attr(e, 'start_time') or 'nicht angegeben') if c else 'nicht verfügbar' }}**
+      - type: grid
+        cards:
+          - type: heading
+            heading: Konto & Datenquelle
+            heading_style: title
+            icon: mdi:account-clock-outline
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: binary_sensor.spielerplus_demo_account_connection
+                state_not: unknown
+              - condition: state
+                entity: binary_sensor.spielerplus_demo_account_connection
+                state_not: unavailable
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.spielerplus_demo_account_connection
+                  name: Kontoabruf
+                - entity: sensor.spielerplus_demo_account_last_success
+                  name: Letzter erfolgreicher Kontoabruf
+          - type: markdown
+            content: |-
+              {% set connected = states('binary_sensor.spielerplus_demo_account_connection') %}
+              {% if connected in ['unknown','unavailable'] %}
+              **Optionales Konto noch nicht eingerichtet.**
+
+              Einstellungen → Geräte & Dienste → SpielerPlus → Konfigurieren → SpielerPlus-Konto verbinden.
+              {% elif connected == 'off' %}
+              **Kontoabruf nicht erfolgreich.** Bitte die Diagnose prüfen. Der Kalenderabruf ist davon getrennt.
+              {% else %}
+              **Teilnahmedaten werden alle 15 Minuten gelesen.**
+              {% endif %}
+
+              Abdeckung: die ersten fünf Termine der SpielerPlus-Terminliste. Liegt ein Termin außerhalb dieser Liste, bleibt seine Teilnahme unbekannt. `?` steht für fehlende Angaben, nicht für null.
+
+              Die Zähler entsprechen den Gruppen in SpielerPlus. Namen und Abwesenheitsgründe werden nicht gespeichert. Hier können keine Zu- oder Absagen abgegeben werden.

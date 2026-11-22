@@ -15,5 +15,5 @@ class SpielerPlusEntity(CoordinatorEntity):
             identifiers={(DOMAIN, entry.entry_id)},
             name=f"SpielerPlus {entry.data[CONF_NAME]}",
             model="ICS calendar",
-            sw_version="0.2.0",
+            sw_version="0.3.0",
         )

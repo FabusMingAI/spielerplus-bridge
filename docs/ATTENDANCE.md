@@ -20,10 +20,16 @@ An official publicly documented attendance API was not confirmed during this res
 4. Add own attendance and aggregate counts before considering participant names. Distinguish missing permission, unknown state and zero participants.
 5. Consider write actions separately, with explicit selection of the event and response. Never infer or submit an RSVP from calendar attendance alone.
 
-No login credentials, account adapter or RSVP write actions are part of v0.2.0.
+No login credentials, account adapter or RSVP write actions are part of v0.2.0; v0.3.0 adds the optional read-only account adapter described below.
 
 ## Deutsch
 
 Der Kalender liefert keine strukturierten Zu-/Absagen oder Teilnehmerlisten. Ein separates Community-Projekt dokumentiert einen angemeldeten Webzugriff auf Teilnahmedaten. Das macht eine spätere Erweiterung technisch plausibel, ist aber keine offizielle Schnittstellenzusage und wurde mit diesem Konto noch nicht geprüft.
 
 Als nächsten Schritt zuerst die eigenen sichtbaren Teilnahmedaten lesend untersuchen, Berechtigungen und Anmeldung klären und danach einen optionalen Konto-Adapter entwickeln. Die Kalenderanbindung soll ohne Kontoanmeldung weiter funktionieren. Schreibende Zu-/Absagen wären ein gesonderter Ausbau.
+
+## v0.3.0 live validation
+
+The authenticated event list and participant-group headings were inspected on 2026-11-22. The optional HA client subsequently signed in through its own session and matched own next-training/game responses and aggregate group counts against the web UI. Actual member data and credentials were not copied into repository fixtures.
+
+The adapter reads the first five listed events and the corresponding aggregate group headers. It does not paginate, export member names/absence reasons or implement RSVP-write routes. It matches ICS to account data only by official event URL. Credentials are entered locally in HA; cookies remain in memory. Additional authentication challenges are not automated. See [v0.3.0 notes](releases/v0.3.0.md).

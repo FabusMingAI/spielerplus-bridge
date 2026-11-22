@@ -35,17 +35,85 @@
       },
       "last_change": {
         "name": "Letzte Kalenderänderung"
+      },
+      "training_participation": {
+        "name": "Teilnahme nächstes Training",
+        "state": {
+          "accepted": "Zugesagt",
+          "uncertain": "Unsicher",
+          "declined": "Abgesagt / abwesend",
+          "pending": "Noch nicht geantwortet",
+          "not_nominated": "Nicht nominiert"
+        }
+      },
+      "game_participation": {
+        "name": "Teilnahme nächstes Spiel",
+        "state": {
+          "accepted": "Zugesagt",
+          "uncertain": "Unsicher",
+          "declined": "Abgesagt / abwesend",
+          "pending": "Noch nicht geantwortet",
+          "not_nominated": "Nicht nominiert"
+        }
+      },
+      "account_last_success": {
+        "name": "Letzter Kontoabruf"
       }
     },
     "binary_sensor": {
       "connection": {
         "name": "Kalenderverbindung"
+      },
+      "account_connection": {
+        "name": "Kontoverbindung"
       }
     },
     "button": {
       "refresh": {
         "name": "Kalender aktualisieren"
       }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Teilnahme (optional)",
+        "menu_options": {
+          "account": "SpielerPlus-Konto verbinden",
+          "disable": "Kontoanmeldung entfernen"
+        }
+      },
+      "account": {
+        "title": "SpielerPlus-Anmeldung",
+        "description": "Nur lesender Zugriff auf den eigenen Status und Teilnahme-Zähler. Die Zugangsdaten werden in der lokalen Home-Assistant-Konfiguration gespeichert und können in Sicherungen enthalten sein. Keine Namen oder Abwesenheitsgründe werden übernommen. Zusätzliche Anmeldeschritte wie 2FA werden noch nicht automatisiert unterstützt.",
+        "data": {
+          "email": "E-Mail-Adresse",
+          "password": "Passwort"
+        }
+      },
+      "team": {
+        "title": "Team-Mitgliedschaft wählen",
+        "description": "Die Mitgliedschaft muss zum eingerichteten Kalender passen.",
+        "data": {
+          "membership_id": "Team / Mitgliedschaft"
+        }
+      },
+      "disable": {
+        "title": "Kontoanmeldung entfernen",
+        "description": "Die optionale Anmeldung wird aus der aktiven Konfiguration entfernt. Der ICS-Kalender bleibt eingerichtet."
+      }
+    },
+    "error": {
+      "invalid_auth": "Anmeldung nicht erfolgreich. Bitte die Zugangsdaten prüfen.",
+      "unsupported_login": "Diese Anmeldung wird nicht unterstützt (z. B. zusätzliche Sicherheitsabfrage). Bitte die Webseite verwenden; Schutzfunktionen nicht deaktivieren.",
+      "access_denied": "SpielerPlus verweigert den Zugriff. Es wurden keine Teilnahmen geändert.",
+      "no_memberships": "Keine passende Team-Mitgliedschaft gefunden.",
+      "cannot_connect": "SpielerPlus ist momentan nicht erreichbar.",
+      "response_too_large": "Die Antwort überschreitet die Größenbegrenzung.",
+      "unexpected_response": "Die Antwort wird nicht erkannt. Die Webseite könnte geändert worden sein."
+    },
+    "abort": {
+      "no_memberships": "Keine passende Team-Mitgliedschaft gefunden."
     }
   }
 }

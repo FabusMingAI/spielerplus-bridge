@@ -5,7 +5,7 @@
 ```bash
 python3 -m venv .venv
 . .venv/bin/activate
-pip install -r spielerplus_mcp/requirements.txt pytest pyyaml
+pip install -r requirements-dev.txt
 python scripts/validate_repository.py
 python -m pytest -q
 python -m compileall -q spielerplus_mcp custom_components tests tests_ha
@@ -20,6 +20,8 @@ Install `custom_components/spielerplus` in an isolated Home Assistant test conta
 ```bash
 docker cp tests_ha/test_runtime.py CONTAINER:/tmp/test_spielerplus.py
 docker exec CONTAINER python /tmp/test_spielerplus.py
+docker cp tests_ha/test_account.py CONTAINER:/tmp/test_account.py
+docker exec CONTAINER python /tmp/test_account.py
 ```
 
 These standard-library unittest tests exercise bounded chunked downloads, coordinator change events, initial-baseline behavior, sanitized errors, diagnostic availability, calendar identity and the manual-refresh button. They use synthetic responses and do not require a real subscription.
