@@ -4,10 +4,12 @@ on:
   pull_request:
 permissions:
   contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ['3.11', '3.12', '3.13']
     steps:
@@ -26,15 +28,18 @@ jobs:
       - name: Scan for private ICS credentials
         run: |
           python - <<'PYSCAN'
-          import pathlib, re
+          from pathlib import Path
+          import re
+
+          pattern = re.compile(r'spielerplus[.]de/events/ics[?]t=([A-Za-z0-9_-]+)&u=([A-Za-z0-9_-]+)')
+          allowed = {'EXAMPLE', 'PRIVATE', 'DEIN_TOKEN'}
           offenders = []
-          for p in pathlib.Path('.').rglob('*'):
-              if not p.is_file() or '.git' in p.parts or p.suffix not in {'.py', '.md', '.json', '.yml', '.example'}:
+          for path in Path('.').rglob('*'):
+              if not path.is_file() or '.git' in path.parts or path.suffix not in {'.py', '.md', '.json', '.yml', '.example'}:
                   continue
-              data = p.read_text(errors='ignore')
-              for m in re.finditer(r'spielerplus\\.de/events/ics\\?t=([^&\\s"\\']+)&u=([^&\\s"\\']+)', data):
-                  if any(x not in {'EXAMPLE', 'PRIVATE', 'DEIN_TOKEN'} for x in m.groups()):
-                      offenders.append(str(p))
+              for first, second in pattern.findall(path.read_text(errors='ignore')):
+                  if first not in allowed or second not in allowed:
+                      offenders.append(str(path))
           if offenders:
-              raise SystemExit('Potential ICS credentials in: ' + ', '.join(offenders))
+              raise SystemExit('Potential ICS credentials in: ' + ', '.join(sorted(set(offenders))))
           PYSCAN
